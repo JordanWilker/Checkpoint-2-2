@@ -26,7 +26,7 @@ let resources = {
     },
     wood:{
         title:"Wood",
-        symbol: "https://picsum.photos/id/161/149",
+        symbol: "https://picsum.photos/id/161/150",
         amount:0,
         perClick:1,
         perSecond:0,
@@ -44,7 +44,7 @@ let resources = {
     },
     fish:{
         title:"Fish",
-        symbol: "https://picsum.photos/id/279/151", 
+        symbol: "https://picsum.photos/id/279/150", 
         amount:0,
         perClick:1,
         perSecond:0,
