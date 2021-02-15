@@ -1,13 +1,14 @@
-let globalMoney = 1000
+let globalMoney = 0
 let upkeepInter;
 let sellInter;
 let victoryText = document.getElementById("victory")
 let defeatText = document.getElementById("defeat")
 let restartButton = document.getElementById("restart-button")
+var globalUpkeep;
 let resources = {
     ore: {
         title: "Ore",
-        //symbol: <i class="fas fa-frog"></i> ,
+        symbol: "fas fa-frog" ,
         amount: 0,
         perClick:1,
         perSecond:0,
@@ -18,14 +19,14 @@ let resources = {
         upgradeOneBoost:1,
         upgradeOneUpkeep:1,
         upgradeTwoName:"Miner",
-        upgradeTwoPrice:50,
+        upgradeTwoPrice:60,
         upgradeTwoAmount:0,
-        upgradeTwoBoost:1,
+        upgradeTwoBoost:2,
         upgradeTwoUpkeep:100,
     },
     wood:{
         title:"Wood",
-        //symbol: <i class="fas fa-fist-raised"></i>,
+        symbol: "fas fa-fist-raised",
         amount:0,
         perClick:1,
         perSecond:0,
@@ -36,22 +37,22 @@ let resources = {
         upgradeOneBoost:1,
         upgradeOneUpkeep:1,
         upgradeTwoName:"Lumberjack",
-        upgradeTwoPrice:50,
+        upgradeTwoPrice:30,
         upgradeTwoAmount:0,
         upgradeTwoBoost:1,
         upgradeTwoUpkeep:2,
     },
     fish:{
         title:"Fish",
-        //symbol: <i class="fas fa-fish"></i>, 
+        symbol: "fas fa-fish", 
         amount:0,
         perClick:1,
         perSecond:0,
         baseSell:1,
         upgradeOneName:"Rod",
-        upgradeOnePrice:15,
+        upgradeOnePrice:25,
         upgradeOneAmount:0,
-        upgradeOneBoost:1,
+        upgradeOneBoost:2,
         upgradeOneUpkeep:1,
         upgradeTwoName:"Fisher",
         upgradeTwoPrice:50,
@@ -59,7 +60,7 @@ let resources = {
         upgradeTwoBoost:1,
         upgradeTwoUpkeep:2
     }
-    
+      
 }
 
 function drawResources(){
@@ -68,12 +69,12 @@ function drawResources(){
     for (let key in resources){
         let resource = resources[key]
         template += /* html */`
-        <div class="col-md-2 text-center my-3 specialCard" id="resource-amount">
+        <div class="col-md-3 text-center my-3 specialCard" id="resource-amount">
                         <h1>${resource.title}</h1>
                         <h3>You have ${resource.amount} ${resource.title}</h3>
                         <p>You are making ${resource.perClick} per click</p>
                         <p>You are making ${resource.perSecond} per second</p>
-                        <button class="btn btn-info specialCard text-uppercase" onclick="buyResource('${key}')">Gather</button>
+                        <button class="btn btn-info specialCard text-uppercase" onclick="buyResource('${key}')">Gather</i></button>
                     </div>
         `
     }
@@ -203,9 +204,10 @@ function sellResources(resourceKey){
 function upkeep(){
     for (let key in resources){
         let resource = resources[key]
-        globalMoney = globalMoney-3-(resource.upgradeOneAmount*resource.upgradeOneUpkeep+resource.upgradeTwoAmount*resource.upgradeTwoUpkeep)
+        globalUpkeep = 3+(resource.upgradeOneAmount*resource.upgradeOneUpkeep+resource.upgradeTwoAmount*resource.upgradeTwoUpkeep)
+        globalMoney = globalMoney-globalUpkeep
         drawGlobalMoney()
-        //console.log("upkeep");
+        console.log("upkeep");
     }
 }
 function upkeepInterval(){
@@ -213,7 +215,7 @@ function upkeepInterval(){
     
 }
 function endGame(){
-    if(globalMoney<=-1000||globalMoney>=1001){
+    if(globalMoney<=-1000||globalMoney>=10000){
         if(globalMoney<=-1000){
             defeatText.removeAttribute("hidden")
         } else{victoryText.removeAttribute("hidden")}
@@ -227,6 +229,8 @@ function endGame(){
             resource.upgradeTwoAmount=0
             resource.upgradeOnePrice=15
             resource.upgradeTwoPrice=50
+            resource.upgradeOneUpkeep = 1
+            resource.upgradeTwoUpkeep = 1
             drawUpgradesOne()
             drawUpgradesTwo();
             clearInterval(upkeepInter);
@@ -236,12 +240,19 @@ function endGame(){
     }
 }
 function restartGame(){
+    upkeepInterval()
+    rpsInterval()
+    sellInterval() 
     for (let key in resources){
         let resource = resources[key]
         resource.perClick = 1
+        resource.upgradeOneUpkeep = 1
+        resource.upgradeTwoUpkeep = 1
         restartButton.setAttribute("hidden","")
         victoryText.setAttribute("hidden","")
         defeatText.setAttribute("hidden","")
+        //upkeepInterval()
+       
     }
 }
 
