@@ -8,7 +8,7 @@ var globalUpkeep;
 let resources = {
     ore: {
         title: "Ore",
-        symbol: "fas fa-frog" ,
+        symbol: "https://picsum.photos/id/166/150" ,
         amount: 0,
         perClick:1,
         perSecond:0,
@@ -26,7 +26,7 @@ let resources = {
     },
     wood:{
         title:"Wood",
-        symbol: "fas fa-fist-raised",
+        symbol: "https://picsum.photos/id/161/149",
         amount:0,
         perClick:1,
         perSecond:0,
@@ -44,7 +44,7 @@ let resources = {
     },
     fish:{
         title:"Fish",
-        symbol: "fas fa-fish", 
+        symbol: "https://picsum.photos/id/279/151", 
         amount:0,
         perClick:1,
         perSecond:0,
@@ -74,7 +74,7 @@ function drawResources(){
                         <h3>You have ${resource.amount} ${resource.title}</h3>
                         <p>You are making ${resource.perClick} per click</p>
                         <p>You are making ${resource.perSecond} per second</p>
-                        <button class="btn btn-info specialCard text-uppercase" onclick="buyResource('${key}')">Gather</i></button>
+                        <button class="btn btn-info specialCard text-uppercase" onclick="buyResource('${key}')"> <img src = ${resource.symbol}> </img> </button>
                     </div>
         `
     }
@@ -89,7 +89,7 @@ function drawUpgradesOne(){
         template += /* html */`
         <div class="col-12 text-center my-2 pb-1 specialCard rounded" id="upgrade-amount">
                         <h3>${resource.upgradeOneName}</h3>
-                        <h4>This will cost $${resource.upgradeOnePrice}</h4>
+                        <h4>$${resource.upgradeOnePrice} |+${resource.upgradeOneBoost} RPC</h4>
                         <h5>You have ${resource.upgradeOneAmount}</h5>
                         <button class="btn btn-info specialCard text-uppercase" onclick="buyUpgradeOne('${key}')">Buy</button>
                     </div>
@@ -105,7 +105,7 @@ function drawUpgradesTwo(){
         template += /* html */`
         <div class="col-12 text-center my-2 pb-1 rounded specialCard" id="upgrade-amount">
                         <h3>${resource.upgradeTwoName}</h3>
-                        <h4>This will cost $${resource.upgradeTwoPrice}</h4>
+                        <h4>$${resource.upgradeTwoPrice} |+${resource.upgradeTwoBoost} RPS</h4>
                         <h5>You have ${resource.upgradeTwoAmount}</h5>
                         <button class="btn btn-info specialCard text-uppercase" onclick="buyUpgradeTwo('${key}')">Hire</button>
 
@@ -250,9 +250,7 @@ function restartGame(){
         resource.upgradeTwoUpkeep = 1
         restartButton.setAttribute("hidden","")
         victoryText.setAttribute("hidden","")
-        defeatText.setAttribute("hidden","")
-        //upkeepInterval()
-       
+        defeatText.setAttribute("hidden","")    
     }
 }
 
